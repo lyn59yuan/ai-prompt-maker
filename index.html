@@ -4,183 +4,576 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>AI Prompt Maker</title>
+  <title>INNERSOUL｜看見內在的自己</title>
 
   <style>
     * {
       box-sizing: border-box;
     }
 
+    :root {
+      --ink: #29272b;
+      --cream: #f5f0e8;
+      --lavender: #b8adbd;
+      --lavender-light: #ddd6df;
+      --sage: #b8bbae;
+      --white: #fffdf9;
+      --muted: #77727a;
+    }
+
     body {
       margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
-                   "Noto Sans TC", sans-serif;
-      background: #f7f7f8;
-      color: #222;
+      min-height: 100vh;
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Noto Sans TC",
+        "PingFang TC",
+        sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(
+          circle at 80% 15%,
+          rgba(184, 173, 189, 0.28),
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 15% 85%,
+          rgba(184, 187, 174, 0.18),
+          transparent 30%
+        ),
+        var(--cream);
     }
 
-    .container {
-      max-width: 700px;
-      margin: 0 auto;
-      padding: 60px 20px;
+    .page {
+      width: 100%;
+      max-width: 720px;
+      min-height: 100vh;
+      margin: auto;
+      padding: 35px 22px 60px;
+    }
+
+    .brand {
       text-align: center;
+      letter-spacing: 5px;
+      font-size: 15px;
+      font-weight: 500;
+      margin-top: 10px;
     }
 
-    .logo {
-      font-size: 56px;
-      margin-bottom: 20px;
+    .brand-line {
+      width: 35px;
+      height: 1px;
+      background: var(--lavender);
+      margin: 14px auto;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 90px 10px 60px;
+    }
+
+    .moon {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 30px;
+      border-radius: 50%;
+      background:
+        linear-gradient(
+          135deg,
+          var(--lavender-light),
+          var(--lavender)
+        );
+      box-shadow: 0 15px 40px rgba(80, 70, 80, 0.12);
     }
 
     h1 {
-      font-size: 38px;
-      margin: 0 0 15px;
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 46px;
+      letter-spacing: 6px;
+      font-weight: 400;
     }
 
-    .subtitle {
-      font-size: 18px;
-      color: #666;
-      line-height: 1.7;
-      margin-bottom: 40px;
+    .tagline {
+      margin-top: 18px;
+      font-size: 19px;
+      letter-spacing: 1px;
     }
 
-    button {
-      border: none;
-      background: #111;
-      color: white;
-      padding: 18px 45px;
-      border-radius: 50px;
-      font-size: 18px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      opacity: 0.8;
-    }
-
-    .note {
-      margin-top: 30px;
-      color: #999;
-      font-size: 14px;
-    }
-
-    .progress {
-      color: #999;
+    .intro {
+      margin: 25px auto 40px;
+      max-width: 480px;
+      color: var(--muted);
+      line-height: 2;
       font-size: 15px;
-      margin-bottom: 25px;
+    }
+
+    .button {
+      display: inline-block;
+      border: none;
+      background: var(--ink);
+      color: white;
+      padding: 17px 48px;
+      border-radius: 999px;
+      font-size: 16px;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: 0.25s;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      opacity: 0.9;
+    }
+
+    .section {
+      display: none;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .card {
+      background: rgba(255, 253, 249, 0.78);
+      border: 1px solid rgba(184, 173, 189, 0.35);
+      border-radius: 28px;
+      padding: 38px 28px;
+      box-shadow: 0 20px 60px rgba(70, 60, 70, 0.07);
+      backdrop-filter: blur(10px);
+    }
+
+    .step {
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+      letter-spacing: 2px;
+      margin-bottom: 18px;
     }
 
     .question {
-      font-size: 30px;
-      font-weight: 700;
-      margin-bottom: 15px;
+      text-align: center;
+      font-size: 27px;
+      font-weight: 500;
+      margin-bottom: 12px;
     }
 
     .description {
-      color: #777;
-      font-size: 16px;
+      text-align: center;
+      color: var(--muted);
+      line-height: 1.8;
       margin-bottom: 30px;
+      font-size: 14px;
     }
 
-    textarea {
+    input[type="date"] {
+      display: block;
       width: 100%;
-      min-height: 160px;
-      padding: 18px;
-      border: 1px solid #ddd;
-      border-radius: 18px;
-      font-size: 17px;
-      font-family: inherit;
-      resize: vertical;
-      outline: none;
+      padding: 17px;
+      border: 1px solid #d8d0d7;
+      border-radius: 16px;
       background: white;
+      color: var(--ink);
+      font-size: 16px;
+      font-family: inherit;
+      outline: none;
     }
 
-    textarea:focus {
-      border-color: #111;
+    input[type="date"]:focus {
+      border-color: var(--lavender);
     }
 
-    .next-button {
-      margin-top: 25px;
+    .result {
+      text-align: center;
     }
 
-    .hidden {
-      display: none;
+    .result-label {
+      color: var(--muted);
+      letter-spacing: 3px;
+      font-size: 12px;
+      margin-bottom: 12px;
+    }
+
+    .number {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 110px;
+      line-height: 1;
+      color: var(--ink);
+      margin: 10px 0 20px;
+    }
+
+    .keyword {
+      display: inline-block;
+      background: var(--lavender-light);
+      padding: 9px 18px;
+      border-radius: 999px;
+      font-size: 14px;
+      margin-bottom: 28px;
+    }
+
+    .result-text {
+      text-align: left;
+      line-height: 2;
+      color: #5f5a61;
+      font-size: 15px;
+      background: rgba(221, 214, 223, 0.3);
+      padding: 22px;
+      border-radius: 18px;
+      margin-bottom: 25px;
+    }
+
+    .quote {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 21px;
+      line-height: 1.8;
+      text-align: center;
+      padding: 10px 5px 25px;
+    }
+
+    .small-note {
+      text-align: center;
+      color: #99939b;
+      font-size: 11px;
+      line-height: 1.7;
+      margin-top: 28px;
+    }
+
+    @media (max-width: 480px) {
+      .page {
+        padding: 25px 17px 45px;
+      }
+
+      .hero {
+        padding: 75px 5px 45px;
+      }
+
+      h1 {
+        font-size: 38px;
+      }
+
+      .tagline {
+        font-size: 17px;
+      }
+
+      .card {
+        padding: 30px 20px;
+      }
+
+      .question {
+        font-size: 24px;
+      }
+
+      .number {
+        font-size: 90px;
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- 首頁 -->
-  <div id="home" class="container">
+  <main class="page">
 
-    <div class="logo">✨</div>
-
-    <h1>AI Prompt Maker</h1>
-
-    <div class="subtitle">
-      把你的想法一步一步整理<br>
-      自動產生可以直接交給 AI 的完整指令
+    <div class="brand">
+      INNERSOUL
     </div>
 
-    <button onclick="start()">
-      開始製作
-    </button>
-
-    <div class="note">
-      只需要回答幾個問題，就能完成
-    </div>
-
-  </div>
+    <div class="brand-line"></div>
 
 
-  <!-- 第 1 題 -->
-  <div id="questionPage" class="container hidden">
+    <!-- 首頁 -->
+    <section id="home" class="section active">
 
-    <div class="progress">
-      第 1 題 / 12
-    </div>
+      <div class="hero">
 
-    <div class="question">
-      你想要製作什麼？
-    </div>
+        <div class="moon"></div>
 
-    <div class="description">
-      請簡單描述你想做的網站、工具或 App。
-    </div>
+        <h1>INNERSOUL</h1>
 
-    <textarea
-      id="answer"
-      placeholder="例如：我想做一個美甲預約網站..."
-    ></textarea>
+        <div class="tagline">
+          看見內在的自己
+        </div>
 
-    <br>
+        <div class="intro">
+          每一個出生日期，<br>
+          都可以成為一次與自己的對話。<br><br>
 
-    <button class="next-button" onclick="nextQuestion()">
-      下一步 →
-    </button>
+          從生命靈數開始，<br>
+          探索你的內在特質與人生課題。
+        </div>
 
-  </div>
+        <button class="button" onclick="start()">
+          開始探索
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- 輸入生日 -->
+    <section id="birthday" class="section">
+
+      <div class="card">
+
+        <div class="step">
+          INNER NUMBER · 01
+        </div>
+
+        <div class="question">
+          你的出生日期
+        </div>
+
+        <div class="description">
+          從你的出生日期開始，<br>
+          認識屬於你的生命靈數。
+        </div>
+
+        <input
+          type="date"
+          id="birthdayInput"
+        >
+
+        <br>
+
+        <button class="button" onclick="calculateNumber()">
+          探索我的生命靈數
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- 結果 -->
+    <section id="result" class="section">
+
+      <div class="card result">
+
+        <div class="result-label">
+          YOUR INNER NUMBER
+        </div>
+
+        <div id="number" class="number">
+          7
+        </div>
+
+        <div id="keyword" class="keyword">
+          探索者 · 思考者
+        </div>
+
+        <div id="resultText" class="result-text">
+        </div>
+
+        <div id="quote" class="quote">
+        </div>
+
+        <button class="button" onclick="restart()">
+          再次探索
+        </button>
+
+        <div class="small-note">
+          生命靈數是一種自我探索與反思的工具，<br>
+          結果不代表固定命運，也不能取代專業諮詢。
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
 
 
   <script>
 
-    function start() {
-      document.getElementById("home").classList.add("hidden");
-      document.getElementById("questionPage").classList.remove("hidden");
+    function showSection(id) {
+
+      document.querySelectorAll(".section").forEach(section => {
+        section.classList.remove("active");
+      });
+
+      document.getElementById(id).classList.add("active");
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
     }
 
-    function nextQuestion() {
 
-      const answer = document.getElementById("answer").value.trim();
+    function start() {
+      showSection("birthday");
+    }
 
-      if (answer === "") {
-        alert("請先回答問題！");
+
+    function calculateLifeNumber(dateString) {
+
+      const digits = dateString.replace(/-/g, "");
+
+      let total = 0;
+
+      for (let digit of digits) {
+        total += Number(digit);
+      }
+
+      while (total > 9 && total !== 11 && total !== 22 && total !== 33) {
+
+        total = String(total)
+          .split("")
+          .reduce((sum, digit) => sum + Number(digit), 0);
+
+      }
+
+      return total;
+    }
+
+
+    function calculateNumber() {
+
+      const birthday =
+        document.getElementById("birthdayInput").value;
+
+      if (!birthday) {
+        alert("請先選擇你的出生日期。");
         return;
       }
 
-      alert("回答已保存！下一步我們會加入第 2 題。");
+      const number = calculateLifeNumber(birthday);
 
-      console.log("第 1 題答案：", answer);
+      const data = {
+
+        1: {
+          keyword: "開創者 · 行動者",
+          text:
+            "你可能擁有很強的獨立性與行動力。你習慣靠自己的力量做決定，也希望人生能按照自己的方向前進。你的心靈課題，可能是學會在堅強之外，也允許自己接受陪伴與支持。",
+          quote:
+            "你不需要證明自己的堅強，才能值得被愛。"
+        },
+
+        2: {
+          keyword: "感受者 · 連結者",
+          text:
+            "你對環境與他人的情緒可能特別敏感，也很重視關係中的平衡。你容易感受到別人的需要，但也要記得，你自己的感受同樣重要。",
+          quote:
+            "照顧別人的同時，也別忘了把自己放進心裡。"
+        },
+
+        3: {
+          keyword: "創造者 · 表達者",
+          text:
+            "你的內在可能需要自由、創意與表達。當你能把感受說出來、寫下來或創造出來時，往往更容易找回自己的能量。",
+          quote:
+            "你的聲音值得被聽見，你的感受也值得被理解。"
+        },
+
+        4: {
+          keyword: "建構者 · 穩定者",
+          text:
+            "你可能重視安全感、秩序與可靠的生活。你習慣一步一步建立自己的世界，但有時也需要提醒自己，不必所有事情都掌控得完美。",
+          quote:
+            "人生不需要每一步都確定，偶爾停下來也是前進。"
+        },
+
+        5: {
+          keyword: "探索者 · 自由者",
+          text:
+            "你的內在可能渴望自由、變化與新的體驗。當生活過於固定時，你可能容易感到被束縛。真正的自由，也包含了解自己真正想要什麼。",
+          quote:
+            "自由不是逃離一切，而是知道什麼值得留下。"
+        },
+
+        6: {
+          keyword: "守護者 · 愛的給予者",
+          text:
+            "你可能很重視家人、關係與責任，也容易把別人的需要放在自己前面。你的心靈課題，是在付出與照顧別人之外，也學會照顧自己。",
+          quote:
+            "你值得得到的愛，不需要靠付出換來。"
+        },
+
+        7: {
+          keyword: "探索者 · 思考者",
+          text:
+            "你的內在世界可能比外表看起來更加豐富。你需要獨處、思考與理解事物的時間，也可能常常思考人生真正的意義。別忘了，並不是所有答案都需要立刻找到。",
+          quote:
+            "有些答案，不是在尋找時出現，而是在安靜下來後浮現。"
+        },
+
+        8: {
+          keyword: "實踐者 · 掌舵者",
+          text:
+            "你可能擁有強烈的目標感，也希望自己能掌握人生方向。你對成就與現實成果可能相當重視，但真正的富足，也包含內心的安定。",
+          quote:
+            "真正的力量，不只是掌控世界，也包括安住自己的內心。"
+        },
+
+        9: {
+          keyword: "理想者 · 同理者",
+          text:
+            "你可能擁有較強的同理心，也容易被人與世界的故事觸動。你的人生可能經常經歷放下與重新開始，而每一次結束，都可能讓你更了解自己。",
+          quote:
+            "放下不是失去，而是讓新的自己有空間出現。"
+        },
+
+        11: {
+          keyword: "直覺者 · 啟發者",
+          text:
+            "11 常被視為具有高度直覺與感受力的主數。你可能容易接收到細微的情緒與訊息，也需要學習讓敏感成為力量，而不是讓它變成負擔。",
+          quote:
+            "你的敏感不是弱點，它也可能是你理解世界的方式。"
+        },
+
+        22: {
+          keyword: "築夢者 · 實踐者",
+          text:
+            "22 常被視為具有把想法落實成現實的特質。你可能有較大的理想與責任感，也需要學習不要因為對自己的要求太高，而忘記享受當下。",
+          quote:
+            "你可以有遠大的夢，也可以溫柔地走自己的路。"
+        },
+
+        33: {
+          keyword: "療癒者 · 奉獻者",
+          text:
+            "33 常被視為與關懷、理解與服務他人有關的主數。你可能很容易感受到別人的需要，但請記得，真正的付出不應該以耗盡自己為代價。",
+          quote:
+            "溫柔地愛別人之前，也請先溫柔地對待自己。"
+        }
+
+      };
+
+      document.getElementById("number").textContent = number;
+
+      document.getElementById("keyword").textContent =
+        data[number].keyword;
+
+      document.getElementById("resultText").textContent =
+        data[number].text;
+
+      document.getElementById("quote").textContent =
+        "「" + data[number].quote + "」";
+
+      showSection("result");
+    }
+
+
+    function restart() {
+
+      document.getElementById("birthdayInput").value = "";
+
+      showSection("home");
     }
 
   </script>
