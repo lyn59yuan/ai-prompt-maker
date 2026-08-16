@@ -43,7 +43,7 @@
       margin-bottom: 40px;
     }
 
-    .start-button {
+    button {
       border: none;
       background: #111;
       color: white;
@@ -53,7 +53,7 @@
       cursor: pointer;
     }
 
-    .start-button:hover {
+    button:hover {
       opacity: 0.8;
     }
 
@@ -62,12 +62,56 @@
       color: #999;
       font-size: 14px;
     }
+
+    .progress {
+      color: #999;
+      font-size: 15px;
+      margin-bottom: 25px;
+    }
+
+    .question {
+      font-size: 30px;
+      font-weight: 700;
+      margin-bottom: 15px;
+    }
+
+    .description {
+      color: #777;
+      font-size: 16px;
+      margin-bottom: 30px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 160px;
+      padding: 18px;
+      border: 1px solid #ddd;
+      border-radius: 18px;
+      font-size: 17px;
+      font-family: inherit;
+      resize: vertical;
+      outline: none;
+      background: white;
+    }
+
+    textarea:focus {
+      border-color: #111;
+    }
+
+    .next-button {
+      margin-top: 25px;
+    }
+
+    .hidden {
+      display: none;
+    }
   </style>
 </head>
 
 <body>
 
-  <div class="container">
+  <!-- 首頁 -->
+  <div id="home" class="container">
 
     <div class="logo">✨</div>
 
@@ -78,7 +122,7 @@
       自動產生可以直接交給 AI 的完整指令
     </div>
 
-    <button class="start-button" onclick="start()">
+    <button onclick="start()">
       開始製作
     </button>
 
@@ -88,10 +132,57 @@
 
   </div>
 
+
+  <!-- 第 1 題 -->
+  <div id="questionPage" class="container hidden">
+
+    <div class="progress">
+      第 1 題 / 12
+    </div>
+
+    <div class="question">
+      你想要製作什麼？
+    </div>
+
+    <div class="description">
+      請簡單描述你想做的網站、工具或 App。
+    </div>
+
+    <textarea
+      id="answer"
+      placeholder="例如：我想做一個美甲預約網站..."
+    ></textarea>
+
+    <br>
+
+    <button class="next-button" onclick="nextQuestion()">
+      下一步 →
+    </button>
+
+  </div>
+
+
   <script>
+
     function start() {
-      alert("我們開始製作你的 AI 工具！");
+      document.getElementById("home").classList.add("hidden");
+      document.getElementById("questionPage").classList.remove("hidden");
     }
+
+    function nextQuestion() {
+
+      const answer = document.getElementById("answer").value.trim();
+
+      if (answer === "") {
+        alert("請先回答問題！");
+        return;
+      }
+
+      alert("回答已保存！下一步我們會加入第 2 題。");
+
+      console.log("第 1 題答案：", answer);
+    }
+
   </script>
 
 </body>
