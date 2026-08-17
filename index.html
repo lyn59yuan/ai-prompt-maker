@@ -1,582 +1,231 @@
-<!DOCTYPE html>
+html = r'''<!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>INNERSOUL｜看見內在的自己</title>
-
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    :root {
-      --ink: #29272b;
-      --cream: #f5f0e8;
-      --lavender: #b8adbd;
-      --lavender-light: #ddd6df;
-      --sage: #b8bbae;
-      --white: #fffdf9;
-      --muted: #77727a;
-    }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Noto Sans TC",
-        "PingFang TC",
-        sans-serif;
-      color: var(--ink);
-      background:
-        radial-gradient(
-          circle at 80% 15%,
-          rgba(184, 173, 189, 0.28),
-          transparent 30%
-        ),
-        radial-gradient(
-          circle at 15% 85%,
-          rgba(184, 187, 174, 0.18),
-          transparent 30%
-        ),
-        var(--cream);
-    }
-
-    .page {
-      width: 100%;
-      max-width: 720px;
-      min-height: 100vh;
-      margin: auto;
-      padding: 35px 22px 60px;
-    }
-
-    .brand {
-      text-align: center;
-      letter-spacing: 5px;
-      font-size: 15px;
-      font-weight: 500;
-      margin-top: 10px;
-    }
-
-    .brand-line {
-      width: 35px;
-      height: 1px;
-      background: var(--lavender);
-      margin: 14px auto;
-    }
-
-    .hero {
-      text-align: center;
-      padding: 90px 10px 60px;
-    }
-
-    .moon {
-      width: 72px;
-      height: 72px;
-      margin: 0 auto 30px;
-      border-radius: 50%;
-      background:
-        linear-gradient(
-          135deg,
-          var(--lavender-light),
-          var(--lavender)
-        );
-      box-shadow: 0 15px 40px rgba(80, 70, 80, 0.12);
-    }
-
-    h1 {
-      margin: 0;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 46px;
-      letter-spacing: 6px;
-      font-weight: 400;
-    }
-
-    .tagline {
-      margin-top: 18px;
-      font-size: 19px;
-      letter-spacing: 1px;
-    }
-
-    .intro {
-      margin: 25px auto 40px;
-      max-width: 480px;
-      color: var(--muted);
-      line-height: 2;
-      font-size: 15px;
-    }
-
-    .button {
-      display: inline-block;
-      border: none;
-      background: var(--ink);
-      color: white;
-      padding: 17px 48px;
-      border-radius: 999px;
-      font-size: 16px;
-      letter-spacing: 2px;
-      cursor: pointer;
-      transition: 0.25s;
-    }
-
-    .button:hover {
-      transform: translateY(-2px);
-      opacity: 0.9;
-    }
-
-    .section {
-      display: none;
-      animation: fadeIn 0.5s ease;
-    }
-
-    .section.active {
-      display: block;
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .card {
-      background: rgba(255, 253, 249, 0.78);
-      border: 1px solid rgba(184, 173, 189, 0.35);
-      border-radius: 28px;
-      padding: 38px 28px;
-      box-shadow: 0 20px 60px rgba(70, 60, 70, 0.07);
-      backdrop-filter: blur(10px);
-    }
-
-    .step {
-      text-align: center;
-      color: var(--muted);
-      font-size: 13px;
-      letter-spacing: 2px;
-      margin-bottom: 18px;
-    }
-
-    .question {
-      text-align: center;
-      font-size: 27px;
-      font-weight: 500;
-      margin-bottom: 12px;
-    }
-
-    .description {
-      text-align: center;
-      color: var(--muted);
-      line-height: 1.8;
-      margin-bottom: 30px;
-      font-size: 14px;
-    }
-
-    input[type="date"] {
-      display: block;
-      width: 100%;
-      padding: 17px;
-      border: 1px solid #d8d0d7;
-      border-radius: 16px;
-      background: white;
-      color: var(--ink);
-      font-size: 16px;
-      font-family: inherit;
-      outline: none;
-    }
-
-    input[type="date"]:focus {
-      border-color: var(--lavender);
-    }
-
-    .result {
-      text-align: center;
-    }
-
-    .result-label {
-      color: var(--muted);
-      letter-spacing: 3px;
-      font-size: 12px;
-      margin-bottom: 12px;
-    }
-
-    .number {
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 110px;
-      line-height: 1;
-      color: var(--ink);
-      margin: 10px 0 20px;
-    }
-
-    .keyword {
-      display: inline-block;
-      background: var(--lavender-light);
-      padding: 9px 18px;
-      border-radius: 999px;
-      font-size: 14px;
-      margin-bottom: 28px;
-    }
-
-    .result-text {
-      text-align: left;
-      line-height: 2;
-      color: #5f5a61;
-      font-size: 15px;
-      background: rgba(221, 214, 223, 0.3);
-      padding: 22px;
-      border-radius: 18px;
-      margin-bottom: 25px;
-    }
-
-    .quote {
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 21px;
-      line-height: 1.8;
-      text-align: center;
-      padding: 10px 5px 25px;
-    }
-
-    .small-note {
-      text-align: center;
-      color: #99939b;
-      font-size: 11px;
-      line-height: 1.7;
-      margin-top: 28px;
-    }
-
-    @media (max-width: 480px) {
-      .page {
-        padding: 25px 17px 45px;
-      }
-
-      .hero {
-        padding: 75px 5px 45px;
-      }
-
-      h1 {
-        font-size: 38px;
-      }
-
-      .tagline {
-        font-size: 17px;
-      }
-
-      .card {
-        padding: 30px 20px;
-      }
-
-      .question {
-        font-size: 24px;
-      }
-
-      .number {
-        font-size: 90px;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>INNERSOUL｜看見內在的自己</title>
+<style>
+*{box-sizing:border-box}
+:root{
+  --ink:#29272b;--cream:#f5f0e8;--lav:#b8adbd;--lav2:#ddd6df;
+  --sage:#b8bbae;--white:#fffdf9;--muted:#77727a;--line:#ded7dd;
+}
+html{scroll-behavior:smooth}
+body{
+  margin:0;min-height:100vh;color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC","PingFang TC",sans-serif;
+  background:
+    radial-gradient(circle at 82% 10%,rgba(184,173,189,.30),transparent 29%),
+    radial-gradient(circle at 12% 85%,rgba(184,187,174,.20),transparent 31%),
+    var(--cream);
+}
+.page{max-width:760px;margin:auto;padding:28px 18px 70px}
+.brand{text-align:center;letter-spacing:6px;font-size:14px;margin-top:5px}
+.brand-line{width:36px;height:1px;background:var(--lav);margin:13px auto}
+.section{display:none;animation:fade .45s ease}.section.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.hero{text-align:center;padding:82px 8px 55px}
+.moon{width:76px;height:76px;margin:0 auto 30px;border-radius:50%;
+background:linear-gradient(135deg,var(--lav2),var(--lav));box-shadow:0 18px 45px rgba(70,60,70,.13)}
+h1{margin:0;font-family:Georgia,"Times New Roman",serif;font-size:46px;letter-spacing:7px;font-weight:400}
+.tagline{margin-top:18px;font-size:19px;letter-spacing:1px}
+.intro{max-width:500px;margin:24px auto 38px;color:var(--muted);line-height:2;font-size:15px}
+.button{border:0;background:var(--ink);color:#fff;padding:16px 34px;border-radius:999px;font-size:15px;letter-spacing:2px;cursor:pointer;transition:.25s}
+.button:hover{transform:translateY(-2px);opacity:.9}
+.card{background:rgba(255,253,249,.80);border:1px solid rgba(184,173,189,.38);border-radius:28px;padding:34px 25px;box-shadow:0 20px 60px rgba(70,60,70,.07);backdrop-filter:blur(10px)}
+.step{text-align:center;color:var(--muted);font-size:12px;letter-spacing:2px;margin-bottom:15px}
+.question{text-align:center;font-size:27px;font-weight:500;margin-bottom:10px}
+.description{text-align:center;color:var(--muted);line-height:1.85;margin-bottom:28px;font-size:14px}
+input[type=date],textarea{width:100%;border:1px solid var(--line);border-radius:16px;background:#fff;color:var(--ink);font:inherit;outline:none}
+input[type=date]{padding:16px}
+textarea{min-height:135px;padding:17px;resize:vertical}
+input:focus,textarea:focus{border-color:var(--lav)}
+.center{text-align:center}.mt{margin-top:22px}
+.result-head{text-align:center}.result-label{color:var(--muted);letter-spacing:3px;font-size:11px}
+.number{font-family:Georgia,serif;font-size:105px;line-height:1;margin:10px 0 8px}
+.keyword{display:inline-block;background:var(--lav2);padding:8px 17px;border-radius:999px;font-size:13px}
+.birth-display{color:var(--muted);font-size:13px;margin-top:15px}
+.report{margin-top:25px;display:grid;gap:14px}
+.report-card{background:rgba(255,255,255,.58);border:1px solid rgba(184,173,189,.25);border-radius:21px;padding:23px}
+.report-title{font-size:17px;margin-bottom:11px;font-weight:600}
+.report-title span{margin-right:8px}.report-text{color:#625d64;line-height:1.95;font-size:14px}
+.heal{background:rgba(221,214,223,.42);border-color:rgba(184,173,189,.45)}
+.heal .report-text{font-family:Georgia,"Noto Serif TC",serif;font-size:16px;color:#504b52}
+.quote{font-family:Georgia,"Noto Serif TC",serif;font-size:21px;line-height:1.8;text-align:center;padding:12px 4px 4px}
+.actions{text-align:center;margin-top:26px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.secondary{background:transparent;color:var(--ink);border:1px solid #bdb5bd}
+.choice-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:11px;margin-top:22px}
+.choice{padding:15px 10px;border:1px solid var(--line);border-radius:15px;background:rgba(255,255,255,.65);cursor:pointer;color:var(--ink);font:inherit}
+.choice.selected{background:var(--lav2);border-color:var(--lav)}
+.question-page .card{padding-bottom:28px}
+.progress{height:4px;background:#e5dfe3;border-radius:9px;margin:0 0 25px;overflow:hidden}
+.progress-bar{height:100%;background:var(--lav);width:0;transition:.3s}
+.small-note{text-align:center;color:#99939b;font-size:11px;line-height:1.7;margin-top:25px}
+@media(max-width:480px){.hero{padding:68px 5px 45px}h1{font-size:38px}.card{padding:28px 19px}.question{font-size:24px}.number{font-size:88px}.choice-grid{grid-template-columns:1fr 1fr}}
+</style>
 </head>
-
 <body>
+<main class="page">
+<div class="brand">INNERSOUL</div><div class="brand-line"></div>
 
-  <main class="page">
-
-    <div class="brand">
-      INNERSOUL
+<section id="home" class="section active">
+  <div class="hero">
+    <div class="moon"></div>
+    <h1>INNERSOUL</h1>
+    <div class="tagline">看見內在的自己</div>
+    <div class="intro">
+      每一個出生日期，都可以成為一次與自己的對話。<br><br>
+      從生命靈數開始，理解自己的特質、關係、人生課題，
+      也給此刻的自己一點溫柔。
     </div>
-
-    <div class="brand-line"></div>
-
-
-    <!-- 首頁 -->
-    <section id="home" class="section active">
-
-      <div class="hero">
-
-        <div class="moon"></div>
-
-        <h1>INNERSOUL</h1>
-
-        <div class="tagline">
-          看見內在的自己
-        </div>
-
-        <div class="intro">
-          每一個出生日期，<br>
-          都可以成為一次與自己的對話。<br><br>
-
-          從生命靈數開始，<br>
-          探索你的內在特質與人生課題。
-        </div>
-
-        <button class="button" onclick="start()">
-          開始探索
-        </button>
-
-      </div>
-
-    </section>
-
-
-    <!-- 輸入生日 -->
-    <section id="birthday" class="section">
-
-      <div class="card">
-
-        <div class="step">
-          INNER NUMBER · 01
-        </div>
-
-        <div class="question">
-          你的出生日期
-        </div>
-
-        <div class="description">
-          從你的出生日期開始，<br>
-          認識屬於你的生命靈數。
-        </div>
-
-        <input
-          type="date"
-          id="birthdayInput"
-        >
-
-        <br>
-
-        <button class="button" onclick="calculateNumber()">
-          探索我的生命靈數
-        </button>
-
-      </div>
-
-    </section>
-
-
-    <!-- 結果 -->
-    <section id="result" class="section">
-
-      <div class="card result">
-
-        <div class="result-label">
-          YOUR INNER NUMBER
-        </div>
-
-        <div id="number" class="number">
-          7
-        </div>
-
-        <div id="keyword" class="keyword">
-          探索者 · 思考者
-        </div>
-
-        <div id="resultText" class="result-text">
-        </div>
-
-        <div id="quote" class="quote">
-        </div>
-
-        <button class="button" onclick="restart()">
-          再次探索
-        </button>
-
-        <div class="small-note">
-          生命靈數是一種自我探索與反思的工具，<br>
-          結果不代表固定命運，也不能取代專業諮詢。
-        </div>
-
-      </div>
-
-    </section>
-
-  </main>
-
-
-  <script>
-
-    function showSection(id) {
-
-      document.querySelectorAll(".section").forEach(section => {
-        section.classList.remove("active");
-      });
-
-      document.getElementById(id).classList.add("active");
-
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
-    }
-
-
-    function start() {
-      showSection("birthday");
-    }
-
-
-    function calculateLifeNumber(dateString) {
-
-      const digits = dateString.replace(/-/g, "");
-
-      let total = 0;
-
-      for (let digit of digits) {
-        total += Number(digit);
-      }
-
-      while (total > 9 && total !== 11 && total !== 22 && total !== 33) {
-
-        total = String(total)
-          .split("")
-          .reduce((sum, digit) => sum + Number(digit), 0);
-
-      }
-
-      return total;
-    }
-
-
-    function calculateNumber() {
-
-      const birthday =
-        document.getElementById("birthdayInput").value;
-
-      if (!birthday) {
-        alert("請先選擇你的出生日期。");
-        return;
-      }
-
-      const number = calculateLifeNumber(birthday);
-
-      const data = {
-
-        1: {
-          keyword: "開創者 · 行動者",
-          text:
-            "你可能擁有很強的獨立性與行動力。你習慣靠自己的力量做決定，也希望人生能按照自己的方向前進。你的心靈課題，可能是學會在堅強之外，也允許自己接受陪伴與支持。",
-          quote:
-            "你不需要證明自己的堅強，才能值得被愛。"
-        },
-
-        2: {
-          keyword: "感受者 · 連結者",
-          text:
-            "你對環境與他人的情緒可能特別敏感，也很重視關係中的平衡。你容易感受到別人的需要，但也要記得，你自己的感受同樣重要。",
-          quote:
-            "照顧別人的同時，也別忘了把自己放進心裡。"
-        },
-
-        3: {
-          keyword: "創造者 · 表達者",
-          text:
-            "你的內在可能需要自由、創意與表達。當你能把感受說出來、寫下來或創造出來時，往往更容易找回自己的能量。",
-          quote:
-            "你的聲音值得被聽見，你的感受也值得被理解。"
-        },
-
-        4: {
-          keyword: "建構者 · 穩定者",
-          text:
-            "你可能重視安全感、秩序與可靠的生活。你習慣一步一步建立自己的世界，但有時也需要提醒自己，不必所有事情都掌控得完美。",
-          quote:
-            "人生不需要每一步都確定，偶爾停下來也是前進。"
-        },
-
-        5: {
-          keyword: "探索者 · 自由者",
-          text:
-            "你的內在可能渴望自由、變化與新的體驗。當生活過於固定時，你可能容易感到被束縛。真正的自由，也包含了解自己真正想要什麼。",
-          quote:
-            "自由不是逃離一切，而是知道什麼值得留下。"
-        },
-
-        6: {
-          keyword: "守護者 · 愛的給予者",
-          text:
-            "你可能很重視家人、關係與責任，也容易把別人的需要放在自己前面。你的心靈課題，是在付出與照顧別人之外，也學會照顧自己。",
-          quote:
-            "你值得得到的愛，不需要靠付出換來。"
-        },
-
-        7: {
-          keyword: "探索者 · 思考者",
-          text:
-            "你的內在世界可能比外表看起來更加豐富。你需要獨處、思考與理解事物的時間，也可能常常思考人生真正的意義。別忘了，並不是所有答案都需要立刻找到。",
-          quote:
-            "有些答案，不是在尋找時出現，而是在安靜下來後浮現。"
-        },
-
-        8: {
-          keyword: "實踐者 · 掌舵者",
-          text:
-            "你可能擁有強烈的目標感，也希望自己能掌握人生方向。你對成就與現實成果可能相當重視，但真正的富足，也包含內心的安定。",
-          quote:
-            "真正的力量，不只是掌控世界，也包括安住自己的內心。"
-        },
-
-        9: {
-          keyword: "理想者 · 同理者",
-          text:
-            "你可能擁有較強的同理心，也容易被人與世界的故事觸動。你的人生可能經常經歷放下與重新開始，而每一次結束，都可能讓你更了解自己。",
-          quote:
-            "放下不是失去，而是讓新的自己有空間出現。"
-        },
-
-        11: {
-          keyword: "直覺者 · 啟發者",
-          text:
-            "11 常被視為具有高度直覺與感受力的主數。你可能容易接收到細微的情緒與訊息，也需要學習讓敏感成為力量，而不是讓它變成負擔。",
-          quote:
-            "你的敏感不是弱點，它也可能是你理解世界的方式。"
-        },
-
-        22: {
-          keyword: "築夢者 · 實踐者",
-          text:
-            "22 常被視為具有把想法落實成現實的特質。你可能有較大的理想與責任感，也需要學習不要因為對自己的要求太高，而忘記享受當下。",
-          quote:
-            "你可以有遠大的夢，也可以溫柔地走自己的路。"
-        },
-
-        33: {
-          keyword: "療癒者 · 奉獻者",
-          text:
-            "33 常被視為與關懷、理解與服務他人有關的主數。你可能很容易感受到別人的需要，但請記得，真正的付出不應該以耗盡自己為代價。",
-          quote:
-            "溫柔地愛別人之前，也請先溫柔地對待自己。"
-        }
-
-      };
-
-      document.getElementById("number").textContent = number;
-
-      document.getElementById("keyword").textContent =
-        data[number].keyword;
-
-      document.getElementById("resultText").textContent =
-        data[number].text;
-
-      document.getElementById("quote").textContent =
-        "「" + data[number].quote + "」";
-
-      showSection("result");
-    }
-
-
-    function restart() {
-
-      document.getElementById("birthdayInput").value = "";
-
-      showSection("home");
-    }
-
-  </script>
-
+    <button class="button" onclick="start()">開始探索</button>
+  </div>
+</section>
+
+<section id="birthday" class="section">
+  <div class="card">
+    <div class="step">INNER NUMBER · 01</div>
+    <div class="question">你的出生日期</div>
+    <div class="description">從你的出生日期開始，認識屬於你的生命靈數。</div>
+    <input type="date" id="birthdayInput">
+    <div class="center mt"><button class="button" onclick="calculateNumber()">探索我的生命靈數</button></div>
+  </div>
+</section>
+
+<section id="result" class="section">
+  <div class="card">
+    <div class="result-head">
+      <div class="result-label">YOUR INNER NUMBER</div>
+      <div id="number" class="number">1</div>
+      <div id="keyword" class="keyword"></div>
+      <div id="birthDisplay" class="birth-display"></div>
+    </div>
+    <div id="report" class="report"></div>
+    <div class="actions">
+      <button class="button" onclick="startSoul()">進入心靈探索</button>
+      <button class="button secondary" onclick="restart()">重新開始</button>
+    </div>
+    <div class="small-note">生命靈數是一種自我探索與反思工具；內容不代表固定命運，也不能取代醫療、心理或其他專業服務。</div>
+  </div>
+</section>
+
+<section id="soul" class="section question-page">
+  <div class="card">
+    <div class="step" id="soulStep">SOUL EXPLORATION · 01 / 5</div>
+    <div class="progress"><div id="progressBar" class="progress-bar"></div></div>
+    <div id="soulQuestion" class="question"></div>
+    <div id="soulDescription" class="description"></div>
+    <div id="choiceArea"></div>
+    <div class="center mt"><button class="button" id="soulNext" onclick="nextSoul()">下一步</button></div>
+  </div>
+</section>
+
+<section id="soulResult" class="section">
+  <div class="card">
+    <div class="result-head">
+      <div class="result-label">YOUR INNER SOUL</div>
+      <div class="question" style="margin-top:10px">此刻的你，值得被好好理解</div>
+    </div>
+    <div id="soulReport" class="report"></div>
+    <div class="actions"><button class="button" onclick="restart()">再次探索</button></div>
+    <div class="small-note">如果某段內容讓你感到不舒服，可以先停下來，選擇讓自己安心的方式照顧當下。</div>
+  </div>
+</section>
+</main>
+
+<script>
+const data={
+1:{keyword:"開創者 · 行動者",core:"你重視自主、方向感與自我決定。你往往願意先走一步，也習慣靠自己的力量處理事情。真正的成長不是更用力，而是知道什麼時候可以放下逞強。",talent:"你擅長發起、決策、推動與創造。當你相信一件事時，行動力會成為很大的優勢。",love:"你需要被尊重，也需要一段不會讓你失去自己的關係。你可能不容易直接說出脆弱，因此學會表達需要，是重要的關係練習。",shadow:"太習慣自己來，可能讓你在累的時候仍然說沒事。獨立是能力，但不必成為隔離自己的牆。",lesson:"從「我要證明自己做得到」慢慢走向「這真的是我想要的嗎？」",work:"適合需要自主性、決策、創意、領導或開創的環境。你需要看見自己的選擇能產生影響。",money:"容易把能力與成果連結在一起。建立長期規劃、分散風險與留出休息空間，會讓你的力量更穩定。",people:"你可能給人可靠、有主見的印象。真正親近後，別人也許才會發現你其實需要被理解。",stress:"壓力大時容易靠意志力撐住。留意過度控制、急著解決所有問題或不願求助。",need:"尊重、信任、空間，以及一個你不必一直證明自己的地方。",heal:"今天不需要把所有事情處理完。允許自己停一下，接受一點幫助，也不會讓你失去力量。",message:"你不需要證明自己的堅強，才能值得被愛。"},
+2:{keyword:"感受者 · 連結者",core:"你重視關係、和諧與情緒上的安全感。你常能察覺細微變化，也容易先想到別人的感受。",talent:"協調、傾聽、合作與感受力是你的優勢。你能把不同的人與觀點放在一起。",love:"你需要溫柔、穩定與被理解。不要因為害怕衝突而一直壓下真正的感受。",shadow:"過度在意別人的反應時，可能忘記自己其實想要什麼。",lesson:"學會說出界線，也學會相信自己的感受有價值。",work:"適合合作、溝通、服務、協調與需要同理心的環境。",money:"容易為關係與安全感花費。建立自己的財務界線，有助於安心。",people:"你常是關係中的潤滑劑，但不必永遠負責維持所有人的和平。",stress:"壓力可能表現為想太多、反覆確認或害怕讓人失望。",need:"安全感、理解、溫柔的溝通與被尊重的界線。",heal:"今天可以少猜一點，多問問自己：如果不用顧慮別人的期待，我真正想要的是什麼？",message:"照顧別人的同時，也別忘了把自己放進心裡。"},
+3:{keyword:"創造者 · 表達者",core:"你需要表達、創造與被看見。情緒若能被說出來、寫下來或轉化成作品，往往會變得更容易理解。",talent:"創意、溝通、故事、審美與感染力是你的自然優勢。",love:"你需要有趣、真誠而能交流的關係。被忽略或無法表達時容易感到失去能量。",shadow:"有時可能用忙碌、幽默或看起來沒事來避開較深的情緒。",lesson:"讓真實感受也擁有被說出口的位置。",work:"適合內容、設計、行銷、表達、教育、創作等需要想法流動的環境。",money:"創意可以成為價值，但要把靈感轉成穩定的流程與紀律。",people:"你容易帶來氣氛與活力，但真正的親密也需要讓別人看見安靜的你。",stress:"可能出現注意力分散、情緒起伏或用娛樂逃離壓力。",need:"表達空間、真誠交流、創造與被欣賞。",heal:"今天找一種方式把心裡的東西放出來：寫三句話、散步、畫畫或聽一首讓你安靜下來的歌。",message:"你的聲音值得被聽見，你的感受也值得被理解。"},
+4:{keyword:"建構者 · 穩定者",core:"你重視可靠、秩序與安全。你通常願意一步一步把生活建立起來，也有很強的責任感。",talent:"規劃、執行、整理、耐心與長期累積是你的優勢。",love:"你需要穩定、可信賴與願意一起面對生活的人。",shadow:"過度追求可控與完美時，可能讓自己很難真正放鬆。",lesson:"安全感不只來自掌控，也來自相信自己能面對變化。",work:"適合制度、管理、專業、工程、財務、營運與需要耐心累積的領域。",money:"重視穩定與可預測性。長期規劃通常比追逐短期刺激更適合你。",people:"你常用行動照顧人，但不一定會說很多。",stress:"可能因責任過多而緊繃，或對自己與他人要求太高。",need:"穩定、清楚的界線、可預期的節奏與真正的休息。",heal:"今天不必把每個細節都安排好。留一點空白，讓生活有呼吸的地方。",message:"人生不需要每一步都確定，偶爾停下來也是前進。"},
+5:{keyword:"探索者 · 自由者",core:"你渴望變化、體驗與自由。你通常不喜歡被固定成單一樣子，也需要空間去探索自己。",talent:"適應力、好奇心、溝通、冒險與快速學習是你的優勢。",love:"你需要親密，也需要空間。最適合你的關係通常不是控制，而是彼此信任。",shadow:"當內在不安時，可能用不斷換環境、忙碌或追求刺激來逃避停下來。",lesson:"自由不只是離開，也是知道什麼值得留下。",work:"適合變化快、需要溝通、旅行、業務、媒體、創新與多元任務的環境。",money:"收入與機會可能有波動。建立基本安全墊能讓你更自由。",people:"你容易認識很多人，但真正深入需要時間與安全感。",stress:"可能坐立難安、厭倦、衝動或想立刻改變現況。",need:"選擇權、空間、新鮮感，以及不被束縛的安全感。",heal:"今天允許自己慢下來，不必每一刻都有新鮮事。安靜並不等於失去自由。",message:"自由不是逃離一切，而是知道什麼值得留下。"},
+6:{keyword:"守護者 · 愛的給予者",core:"你重視愛、家庭、責任與歸屬。你常自然地照顧別人，也容易把「我應該」放在「我想要」之前。",talent:"照顧、責任、審美、教育、協調與建立溫暖環境是你的優勢。",love:"你很願意付出，但需要避免用過度照顧換取安全感。",shadow:"容易背太多責任，或在關係中變成拯救者。",lesson:"愛一個人，不代表要替他承擔全部。",work:"適合教育、服務、設計、照護、管理與需要責任感的領域。",money:"容易把金錢用在家庭與重要的人身上。需要保留屬於自己的資源。",people:"你常被視為可靠的人，但也需要讓別人學會照顧自己。",stress:"可能出現自責、過度操心或覺得只有自己能處理。",need:"被珍惜、被支持、界線與不帶罪惡感的休息。",heal:"今天問自己一次：「如果我不用照顧所有人，我現在最需要什麼？」",message:"你值得得到的愛，不需要靠付出換來。"},
+7:{keyword:"探索者 · 思考者",core:"你的內在世界通常很深。你需要獨處、思考與理解事物的時間，也可能比別人更在意意義與真實。",talent:"觀察、分析、研究、直覺、深度思考與獨立學習是你的優勢。",love:"你需要精神上的理解與安靜的陪伴，不一定需要大量的黏著。",shadow:"想太多、過度分析或把自己關起來，可能讓你與真正的感受保持距離。",lesson:"不是所有答案都要先想明白，感受也可以是一種答案。",work:"適合研究、分析、科技、文字、顧問、專業與需要深度的領域。",money:"重視品質與價值。適合以專業累積長期能力，而非追逐表面速度。",people:"你可能朋友不必多，但希望關係是真實的。",stress:"容易退回自己的世界、失眠、過度思考或情緒抽離。",need:"安靜、理解、個人空間，以及不用解釋太多的陪伴。",heal:"今天給自己一段沒有輸入的時間。安靜下來，不急著找答案，只聽聽自己的心。",message:"有些答案，不是在尋找時出現，而是在安靜下來後浮現。"},
+8:{keyword:"實踐者 · 掌舵者",core:"你重視成果、能力、影響力與現實成就。你可能希望自己有能力照顧生活，也希望努力能看見回報。",talent:"管理、決策、資源整合、談判、商業感與執行力是你的優勢。",love:"你需要尊重、可靠與成熟的關係。不要讓「照顧好一切」取代情感交流。",shadow:"容易把價值感與成就、收入或控制力綁在一起。",lesson:"真正的力量不只是掌控，也包括安住自己。",work:"適合管理、商業、金融、創業、營運、領導與需要結果導向的環境。",money:"對資源與成果較敏感。長期策略、風險意識與界線很重要。",people:"別人可能覺得你強大，但你也需要被看見不必一直負責的那一面。",stress:"可能過度工作、控制細節或把休息視為浪費時間。",need:"成就之外的安全感、信任、休息與情緒交流。",heal:"今天把休息也排進行程。你不是只有在產出時才有價值。",message:"真正的力量，不只是掌控世界，也包括安住自己的內心。"},
+9:{keyword:"理想者 · 同理者",core:"你容易被人與世界的故事觸動，也可能對公平、意義與情感有較深的感受。",talent:"同理、創作、服務、理解人性與看見大局是你的優勢。",love:"你需要真誠與深度，也要留意不要因為想拯救對方而忘記自己。",shadow:"容易留戀已經結束的關係、理想或角色，難以真正放下。",lesson:"結束不一定是失去，有時是為新的自己留出空間。",work:"適合藝術、教育、公益、內容、心理助人相關與需要人文理解的領域。",money:"容易把資源投入自己認同的事。需要兼顧理想與現實規劃。",people:"你可能很願意理解別人，但也要避免成為所有人的情緒容器。",stress:"容易情緒累積、懷舊、失望或因他人的痛苦而耗竭。",need:"界線、意義、被理解，以及允許自己離開不再適合的地方。",heal:"今天練習放下一件已經不需要你負責的事情。放下不是冷漠，是照顧自己。",message:"放下不是失去，而是讓新的自己有空間出現。"},
+11:{keyword:"直覺者 · 啟發者",core:"11 常被視為具有高度直覺與敏感度的主數。你可能容易捕捉細微情緒，也需要學會讓敏感成為力量。",talent:"直覺、創意、洞察、啟發與感受力可能是你的優勢。",love:"你需要深度、真誠與精神上的連結，也需要穩定的界線。",shadow:"過度接收外界情緒時，容易焦慮或懷疑自己。",lesson:"不是每一個感受到的情緒都需要由你承擔。",work:"適合創作、內容、教育、顧問、設計與需要洞察力的工作。",money:"容易受理想驅動。建立實際制度能讓理想走得更遠。",people:"你可能很會感受氣氛，但要分清楚哪些是自己的感受。",stress:"可能過度刺激、睡不好、想太多或情緒敏感。",need:"安靜、穩定、界線與可信任的人。",heal:"把今天接收到的情緒分成兩類：我的，與不屬於我的。你不必全部帶回家。",message:"你的敏感不是弱點，它也可能是你理解世界的方式。"},
+22:{keyword:"築夢者 · 實踐者",core:"22 常被視為能把理想落實成現實的主數。你可能同時感受到遠大的願景與沉重的責任。",talent:"規劃、整合、建構、管理大型目標與長期執行是你的優勢。",love:"你需要成熟、穩定且願意共同建設生活的關係。",shadow:"對自己要求過高，容易把每件事都變成責任。",lesson:"理想可以很大，但人生也需要柔軟與日常。",work:"適合管理、創業、建設、系統、組織與能產生長期影響的工作。",money:"重視資源配置與成果。需要避免過度擴張與承擔。",people:"別人可能依賴你的能力，但你也需要被支持。",stress:"可能因目標過大而感到壓迫，甚至覺得永遠不夠好。",need:"穩定、分段完成、允許自己休息與被支持。",heal:"今天只做下一步，不必一次完成整條路。你的夢不需要靠耗盡自己來實現。",message:"你可以有遠大的夢，也可以溫柔地走自己的路。"},
+33:{keyword:"療癒者 · 奉獻者",core:"33 常被視為與關懷、理解與服務他人有關的主數。你可能很容易感受到別人的需要。",talent:"同理、陪伴、教育、創作、照顧與傳遞溫度是你的優勢。",love:"你容易付出很多，需要留意不要把愛變成犧牲。",shadow:"過度承擔、拯救或覺得自己必須讓所有人都好。",lesson:"真正的愛包含界線，也包含對自己的照顧。",work:"適合教育、內容、服務、照護、藝術與助人相關方向。",money:"容易把資源分享給重要的人。保留自己的安全感同樣重要。",people:"你可能成為大家傾訴的對象，但不必承接所有情緒。",stress:"容易同理疲勞、內疚或把別人的問題變成自己的責任。",need:"界線、休息、被照顧與不帶罪惡感的自我選擇。",heal:"今天把一份溫柔留給自己。你可以關心別人，也可以說「今天我需要先照顧自己」。",message:"溫柔地愛別人之前，也請先溫柔地對待自己。"}
+};
+
+let currentNumber=1,currentBirthday="",soulIndex=0,soulAnswers=[];
+const soulQuestions=[
+ {q:"最近的你，最接近哪一種狀態？",d:"不用想太久，第一個讓你有感覺的答案就好。",o:["😌 平靜","🙂 還不錯","😔 有點累","🥺 心裡有事","😣 壓力很大","💭 說不上來"]},
+ {q:"最近最讓你在意的是？",d:"可以選一個目前最佔據你心裡的位置。",o:["❤️ 感情","🏠 家庭","💼 工作","💰 金錢","👥 人際","🌱 自己","🔮 未來"]},
+ {q:"你現在最需要的是？",d:"不是別人期待你需要什麼，而是你真正想要的。",o:["被理解","安全感","陪伴","自由","肯定","方向","休息"]},
+ {q:"當你難過或壓力很大時，你通常會？",d:"選最接近你的反應。",o:["自己消化","找人說","假裝沒事","讓自己忙起來","先離開人群","不知道怎麼辦"]},
+ {q:"如果現在可以送給自己一句話，你最想說什麼？",d:"可以寫一句最真實的話，不需要漂亮。",text:true}
+];
+
+function show(id){document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));document.getElementById(id).classList.add("active");scrollTo({top:0,behavior:"smooth"});}
+function start(){show("birthday")}
+function lifeNum(ds){
+ let sum=[...ds.replace(/-/g,"")].reduce((a,d)=>a+Number(d),0);
+ while(sum>9 && ![11,22,33].includes(sum)) sum=[...String(sum)].reduce((a,d)=>a+Number(d),0);
+ return sum;
+}
+function calculateNumber(){
+ const b=document.getElementById("birthdayInput").value;
+ if(!b){alert("請先選擇你的出生日期。");return}
+ currentBirthday=b;currentNumber=lifeNum(b);
+ const d=data[currentNumber];
+ document.getElementById("number").textContent=currentNumber;
+ document.getElementById("keyword").textContent=d.keyword;
+ document.getElementById("birthDisplay").textContent=b.replaceAll("-",".");
+ renderReport(d);
+ show("result");
+}
+function renderReport(d){
+ const items=[
+  ["🌿","核心人格",d.core],["✨","天賦與優勢",d.talent],["❤️","感情與關係",d.love],
+  ["🌑","內在陰影",d.shadow],["🌱","人生課題",d.lesson],["💼","工作與天賦",d.work],
+  ["💰","金錢模式",d.money],["👥","人際關係",d.people],["🧠","情緒與壓力",d.stress],
+  ["🤍","你真正需要的愛",d.need],["🌙","療癒方向",d.heal]
+ ];
+ document.getElementById("report").innerHTML=items.map(x=>`<div class="report-card ${x[1]==="療癒方向"?"heal":""}"><div class="report-title"><span>${x[0]}</span>${x[1]}</div><div class="report-text">${x[2]}</div></div>`).join("")+
+ `<div class="report-card heal"><div class="report-title"><span>✨</span>INNER SOUL 給現在的你</div><div class="quote">「${d.message}」</div></div>`;
+}
+function startSoul(){soulIndex=0;soulAnswers=[];renderSoul();show("soul")}
+function renderSoul(){
+ const item=soulQuestions[soulIndex];
+ document.getElementById("soulStep").textContent=`SOUL EXPLORATION · ${String(soulIndex+1).padStart(2,"0")} / ${soulQuestions.length}`;
+ document.getElementById("progressBar").style.width=((soulIndex+1)/soulQuestions.length*100)+"%";
+ document.getElementById("soulQuestion").textContent=item.q;
+ document.getElementById("soulDescription").textContent=item.d;
+ const area=document.getElementById("choiceArea");
+ if(item.text){area.innerHTML=`<textarea id="freeAnswer" placeholder="寫下你現在最想對自己說的話……"></textarea>`}
+ else{area.innerHTML=`<div class="choice-grid">${item.o.map((o,i)=>`<button class="choice" onclick="pick(this,${i})">${o}</button>`).join("")}</div>`}
+ document.getElementById("soulNext").textContent=soulIndex===soulQuestions.length-1?"完成探索":"下一步";
+}
+function pick(el,i){document.querySelectorAll(".choice").forEach(x=>x.classList.remove("selected"));el.classList.add("selected");el.dataset.selected=i}
+function nextSoul(){
+ const item=soulQuestions[soulIndex];let ans="";
+ if(item.text){ans=document.getElementById("freeAnswer").value.trim();if(!ans){alert("可以先寫一句給自己的話，再繼續。");return}}
+ else{const selected=document.querySelector(".choice.selected");if(!selected){alert("選一個最接近你的答案吧。");return}ans=selected.textContent}
+ soulAnswers.push(ans);
+ if(soulIndex<soulQuestions.length-1){soulIndex++;renderSoul()}else{renderSoulResult();show("soulResult")}
+}
+function renderSoulResult(){
+ const d=data[currentNumber],state=soulAnswers[0]||"目前的狀態";
+ const focus=soulAnswers[1]||"自己",need=soulAnswers[2]||"被理解",style=soulAnswers[3]||"自己消化",words=soulAnswers[4]||"願意對自己溫柔一點";
+ const message= currentNumber===1
+ ? `你很可能習慣把事情扛在自己身上。當「${state}」成為最近的感受，而你又把注意力放在「${focus}」，真正需要的也許不是再努力一點，而是讓自己有一個可以卸下防備的地方。`
+ : `當你最近感受到「${state}」，又最在意「${focus}」時，這提醒你可以把注意力從「我應該怎麼做」帶回「我現在真正需要什麼」。你選擇的「${need}」，可能正是近期值得被照顧的一部分。`;
+ const heal=`你的生命靈數 ${currentNumber} 所代表的傾向，與你此刻的回答並不是命運答案，而是一面自我觀察的鏡子。你習慣「${style}」，今天可以練習少做一點自我要求，多給自己一點空間。`;
+ document.getElementById("soulReport").innerHTML=
+ `<div class="report-card"><div class="report-title"><span>🌙</span>此刻的你</div><div class="report-text">${message}</div></div>
+ <div class="report-card"><div class="report-title"><span>🤍</span>你現在需要的</div><div class="report-text">${need}。這不是要求自己立刻改變，而是允許這個需要被看見。</div></div>
+ <div class="report-card heal"><div class="report-title"><span>🌿</span>給自己的療癒</div><div class="report-text">${heal}</div></div>
+ <div class="report-card"><div class="report-title"><span>🪞</span>寫給現在的自己</div><div class="report-text">${words}</div></div>
+ <div class="report-card heal"><div class="report-title"><span>✨</span>INNER SOUL MESSAGE</div><div class="quote">「${d.message}」</div></div>`;
+}
+function restart(){document.getElementById("birthdayInput").value="";show("home")}
+</script>
 </body>
-</html>
+</html>'''
+
+path="/mnt/data/innersoul.html"
+with open(path,"w",encoding="utf-8") as f:
+    f.write(html)
+print(path)
