@@ -1,1 +1,1 @@
-# ai-prompt-maker
+# Ling
